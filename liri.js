@@ -1,23 +1,35 @@
-//concert-this searches the BiT API and brings back "name of venue", "venue location", "date of venue"
 var dotenv = require("dotenv").config();
 var axios = require("axios");
+var fs = require("fs");
 var omdb = require("omdb");
-// var dotenv = require("dotenv").config();
 var keys = require("./keys.js");
 var bandsintown = require("bandsintown-rest");
 var Spotify = require("node-spotify-api");
+var moment = require("moment");
 
 var command = process.argv[2]
 var search = process.argv[3]
 var spotify = new Spotify(keys.spotify);
 var keys = require("./keys.js");
-// var movieInput = "";
 
+//create several stand alone functions for each command to be actioned
+//function movieSearch
+//function spotifySearch
+//function concertSearch
+//function readRandom
 
+//need a function to choose which command is executed
+//function decisionMaker
+
+// function start (runCommands){
 switch(command){
 
     case "movie-this":
+        if (search === undefined){
+            search = "Mr. Nobody"
+        }
         axios.get("https://www.omdbapi.com/?t="+ search +"&apikey=" + keys.omdb.id).then(
+            
             function(responseOMDB){
                 var results = [
                 "Movie Title: " + responseOMDB.data.Title,
@@ -34,35 +46,60 @@ switch(command){
     break;
 
     case "spotify-this-song":
+        if(search === undefined){
+            search = "The Sign"
+        }
         spotify.search({type: "track", query: search, limit: 3,},
-        // axios.get("https://api.spotify.com/v1/search?q="+ search +"&type=artist", 
-        // spotify.request('https://api.spotify.com/v1/tracks/7yCPwWs66K8Ba5lFuU2bcx')
-                    // {"headers": {"Authorization": "Bearer BQDgNKWffNNRaJDd2MoDdTdLgQAbLSpnQfONIbAY4zP4fTTsVOIQhdUaq29G36T7x2XwzkcDm7CKePgHwwqr_MG8_BSFGf1m5HDl04GrVbkcz7FJ-dri5Z3HkkXGPphc7z-LxcqNykFPDIEZVP_oowG-8RJalvKQEQ"}})
-                    // .then(
             function(err, responseSpotify){
-                for (let i=0; i<1; i++){
-                console.log(responseSpotify.tracks.items[i].artists.name); //artist name
-                console.log(responseSpotify.tracks.items[i].album.name); //album name
-                console.log(responseSpotify.tracks.items[i].name);  //song name
-                console.log(responseSpotify.tracks.items[i].preview_url)  //song preview
+                for (let i=0; i<3; i++){
+                var results = [
+                "Artists's name: " + responseSpotify.tracks.items[i].artists[0].name, //artist name
+                "Albums's name: " + responseSpotify.tracks.items[i].album.name, //album name
+                "Song's name: " + responseSpotify.tracks.items[i].name,  //song name
+                "Song preview: " + responseSpotify.tracks.items[i].preview_url,  //song preview
+                ].join("\n\n")
+                console.log(results)
 
             }})
-            // function(err, data){
-            //     console.log("Error occurred: " + err)
-            // }
+
     break;
 
     case "concert-this":
         axios.get("https://rest.bandsintown.com/artists/"+ search +"/events?app_id=" + keys.bit.id).then(
             function(responseBands){
                 for (let i=0; i<3; i++){
-                console.log(responseBands.data[i].venue.name);
-                console.log(responseBands.data[i].venue.city + ", " + responseBands.data[i].venue.country);
-                console.log(responseBands.data[i].datetime);
+                var date = moment(responseBands.data[i].datetime);
+                var momentDate = date.format("MM/DD/YYY hh:mm")
+                var results = [
+                "Venue name: " + responseBands.data[i].venue.name,
+                "Venue city and country: " + responseBands.data[i].venue.city + ", " + responseBands.data[i].venue.country,
+                "Concert date: " + momentDate,
+                ].join("\n\n")
+                console.log(results)
             }})
     break;
 
     case "do-what-it-says":
 
+        fs.readFile("random.txt", "utf8", function(error, data){
+            if (error) {
+                return console.log(error);
+              }
+
+            console.log(data)
+
+            var input = data.split(",")
+            console.log(input)
+
+            var command = input[0]
+            console.log(command)
+            var search = input[1]
+            console.log(search)
+            // start()
+            //run a final function that decides which command to use
+        })
+
     break;
 }
+// }
+// start()

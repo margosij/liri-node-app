@@ -10,6 +10,7 @@
 
 
 The purpose of the liri app is to do one of three things:
+
     1. Find the next three concerts of your favorite artist. This will include the name of the venue, location of the venue and the date of the event.
 
     2. Search Spotify by song title and it will show you different names of bands that have a song by that name, song's name, preview link of the song on Spotify and the ablum of the song you searched.

@@ -12,16 +12,7 @@ var search = process.argv[3]
 var spotify = new Spotify(keys.spotify);
 var keys = require("./keys.js");
 
-//create several stand alone functions for each command to be actioned
-//function movieSearch
-//function spotifySearch
-//function concertSearch
-//function readRandom
-
-//need a function to choose which command is executed
-//function decisionMaker
-
-// function start (runCommands){
+function runCommands (command, search){
 switch(command){
 
     case "movie-this":
@@ -79,27 +70,25 @@ switch(command){
             }})
     break;
 
-    case "do-what-it-says":
-
-        fs.readFile("random.txt", "utf8", function(error, data){
-            if (error) {
-                return console.log(error);
-              }
-
-            console.log(data)
-
-            var input = data.split(",")
-            console.log(input)
-
-            var command = input[0]
-            console.log(command)
-            var search = input[1]
-            console.log(search)
-            // start()
-            //run a final function that decides which command to use
-        })
-
-    break;
 }
-// }
-// start()
+}
+
+if (command !== "do-what-it-says"){
+    runCommands(command, search)
+}
+else{
+    fs.readFile("random.txt", "utf8", function(error, data){
+        if (error) {
+            return console.log(error);
+          }
+
+        var input = data.split(",")
+        console.log(input)
+
+        var superCommand = input[0]
+        console.log(command)
+        var superSearch = input[1]
+        console.log(search)
+        runCommands(superCommand, superSearch)
+    })
+}

@@ -44,12 +44,12 @@ switch(command){
             function(err, responseSpotify){
                 for (let i=0; i<3; i++){
                 var results = [
-                "Artists's name: " + responseSpotify.tracks.items[i].artists[0].name, //artist name
-                "Albums's name: " + responseSpotify.tracks.items[i].album.name, //album name
-                "Song's name: " + responseSpotify.tracks.items[i].name,  //song name
-                "Song preview: " + responseSpotify.tracks.items[i].preview_url,  //song preview
+                "Artists's name: " + responseSpotify.tracks.items[i].artists[0].name,
+                "Albums's name: " + responseSpotify.tracks.items[i].album.name,
+                "Song's name: " + responseSpotify.tracks.items[i].name,
+                "Song preview: " + responseSpotify.tracks.items[i].preview_url,
                 ].join("\n\n")
-                console.log(results)
+                console.log(results+"\n")
 
             }})
 
@@ -66,7 +66,7 @@ switch(command){
                 "Venue city and country: " + responseBands.data[i].venue.city + ", " + responseBands.data[i].venue.country,
                 "Concert date: " + momentDate,
                 ].join("\n\n")
-                console.log(results)
+                console.log(results+"\n")
             }})
     break;
 
@@ -83,12 +83,9 @@ else{
           }
 
         var input = data.split(",")
-        console.log(input)
 
         var superCommand = input[0]
-        console.log(command)
         var superSearch = input[1]
-        console.log(search)
         runCommands(superCommand, superSearch)
     })
 }

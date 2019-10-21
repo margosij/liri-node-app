@@ -1,14 +1,7 @@
 # liri-node-app
 
-<!-- 1. Clearly state the problem the app is trying to solve (i.e. what is it doing and why) -->
-<!-- 2. Give a high-level overview of how the app is organized -->
-<!-- 3. Give start-to-finish instructions on how to run the app -->
-4. Include screenshots, gifs or videos of the app functioning
-<!-- 5. Contain a link to a deployed version of the app -->
-<!-- 6. Clearly list the technologies used in the app -->
-<!-- 7. State your role in the app development -->
-
 Here's a link to the [GitHub page!](https://github.com/margosij/liri-node-app)
+Here's the link to the video of the liri app in [action!](https://youtu.be/fRH1Fy1Oiz8)
 
 The purpose of the liri app is to do one of four things:
 
